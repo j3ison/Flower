@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Flores Amarillas Para Ti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --yellow-1:#fffdf2;
+  --yellow-2:#fff5bf;
+  --yellow-3:#ffe169;
+  --yellow-4:#f4b400;
+  --yellow-5:#bf8500;
+  --green-1:#7fb146;
+  --green-2:#547932;
+  --text:#6a5314;
+  --text-soft:#886e2c;
+  --paper:rgba(255,255,250,.80);
+  --shadow:rgba(96,67,0,.16);
+  --glass:rgba(255,255,255,.65);
+}
+body{
+  font-family:'Poppins',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,.95), transparent 24%),
+    radial-gradient(circle at 90% 10%, rgba(255,239,144,.75), transparent 20%),
+    radial-gradient(circle at 50% 100%, rgba(255,211,59,.30), transparent 35%),
+    linear-gradient(140deg,#fffef6 0%, #fff5c9 45%, #ffd95e 100%);
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255,255,255,.30), transparent 18%),
+    radial-gradient(circle at 82% 20%, rgba(255,255,255,.25), transparent 13%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,.20), transparent 18%);
+  animation:glowMove 10s ease-in-out infinite alternate;
+}
+@keyframes glowMove{from{transform:scale(1)}to{transform:scale(1.04) translateY(-8px)}}
+
+#backDecor, #petalsLayer, #burstLayer{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#backDecor{z-index:1}
+#petalsLayer{z-index:2}
+#burstLayer{z-index:40}
+
+.background-bouquet{
+  position:absolute;
+  opacity:.18;
+  filter: blur(.2px);
+  transform-origin:center bottom;
+  animation:swaySlow 7s ease-in-out infinite alternate;
+}
+.background-bouquet.left{left:-10px;bottom:-10px;transform:scale(1.05)}
+.background-bouquet.right{right:-5px;bottom:-20px;transform:scale(.95) scaleX(-1);animation-delay:-2s}
+.background-bouquet.top{top:20px;right:18%;transform:scale(.55);opacity:.13;animation-delay:-1s}
+@keyframes swaySlow{from{rotate:-2deg}to{rotate:3deg}}
+
+.scene{position:relative;z-index:5;min-height:100vh}
+.hero{
+  min-height:100vh;
+  padding:36px 18px 70px;
+  display:grid;
+  place-items:center;
+}
+.hero-card{
+  width:min(980px,100%);
+  background:var(--paper);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:34px;
+  box-shadow:0 26px 80px var(--shadow), inset 0 1px 0 rgba(255,255,255,.7);
+  padding:clamp(30px,5vw,62px);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.35), transparent 35%);
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,219,90,.18);
+  border:1px solid rgba(244,180,0,.18);
+  color:#9a7200;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+.tag i{width:8px;height:8px;border-radius:50%;background:#f4b400;display:block;box-shadow:0 0 0 0 rgba(244,180,0,.55);animation:pulse 1.7s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(244,180,0,0)}100%{box-shadow:0 0 0 0 rgba(244,180,0,0)}}
+.hero-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(58px,9vw,108px);
+  color:var(--yellow-5);
+  margin-top:18px;
+  line-height:.95;
+  text-shadow:0 10px 30px rgba(205,150,0,.18);
+}
+.hero-name{margin-top:8px;font-size:clamp(20px,2.8vw,30px);font-weight:700;color:#765a1f}
+.hero-copy{max-width:690px;margin:18px auto 0;line-height:1.9;color:var(--text-soft);font-size:clamp(15px,1.8vw,18px)}
+
+.bouquet{
+  margin:28px auto 18px;
+  height:150px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+.flower{position:relative;width:76px;height:130px;margin:0 -5px;transform-origin:center bottom;animation:sway 4s ease-in-out infinite alternate}
+.flower:nth-child(2){transform:scale(1.14);animation-delay:-.7s;z-index:2}
+.flower:nth-child(3){animation-delay:-1.4s}
+.flower:nth-child(4){transform:scale(1.08);animation-delay:-2.1s;z-index:3}
+.flower:nth-child(5){animation-delay:-1s}
+@keyframes sway{from{rotate:-4deg}to{rotate:4deg}}
+.stem{position:absolute;bottom:0;left:50%;width:5px;height:88px;border-radius:20px;background:linear-gradient(var(--green-1),var(--green-2));transform:translateX(-50%)}
+.leaf{position:absolute;width:30px;height:14px;bottom:36px;background:#7ca344;border-radius:100% 0 100% 0}
+.leaf.left{left:14px;rotate:22deg}
+.leaf.right{right:12px;scale:-1 1;rotate:-22deg}
+.head{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:56px;height:56px}
+.petal{position:absolute;left:17px;top:10px;width:22px;height:31px;background:linear-gradient(#ffe95c,#ffc628);border-radius:70% 70% 55% 55%;transform-origin:50% 18px}
+.petal:nth-child(1){transform:rotate(0deg) translateY(-16px)}
+.petal:nth-child(2){transform:rotate(45deg) translateY(-16px)}
+.petal:nth-child(3){transform:rotate(90deg) translateY(-16px)}
+.petal:nth-child(4){transform:rotate(135deg) translateY(-16px)}
+.petal:nth-child(5){transform:rotate(180deg) translateY(-16px)}
+.petal:nth-child(6){transform:rotate(225deg) translateY(-16px)}
+.petal:nth-child(7){transform:rotate(270deg) translateY(-16px)}
+.petal:nth-child(8){transform:rotate(315deg) translateY(-16px)}
+.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #916817, #5c3f0a);z-index:2}
+
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.btn{border:none;min-height:52px;padding:13px 22px;border-radius:999px;cursor:pointer;font:inherit;font-weight:700;transition:.25s ease}
+.btn:hover{transform:translateY(-3px)}
+.btn-primary{background:linear-gradient(135deg,#ffe678,#f4b400);color:#614600;box-shadow:0 14px 30px rgba(244,180,0,.22)}
+.btn-soft{background:rgba(255,255,255,.72);border:1px solid rgba(190,150,25,.14);color:#7a601b;box-shadow:0 10px 22px rgba(96,67,0,.08)}
+
+.panel-view{display:none;min-height:100vh;padding:48px 18px 110px;align-items:start;justify-items:center;position:relative;z-index:15;overflow:visible}
+.panel-view.show{display:grid;animation:fadeIn .5s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.panel-card{
+  width:min(900px,100%);
+  background:rgba(255,255,250,.84);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.92);
+  border-radius:34px;
+  box-shadow:0 26px 80px var(--shadow);
+  padding:clamp(26px,5vw,48px);
+  position:relative;
+  overflow:visible;
+}
+.back-btn{position:absolute;top:18px;left:18px;z-index:30}
+
+/* Carta */
+.letter-wrap{padding-top:72px;padding-bottom:50px;transition:padding .55s ease}
+.letter-wrap.opened{padding-top:340px;padding-bottom:250px}
+.envelope{position:relative;width:min(520px,92vw);height:305px;margin:0 auto;cursor:pointer;filter:drop-shadow(0 24px 28px rgba(94,67,0,.15))}
+.envelope-base{position:absolute;inset:0;border-radius:18px;background:linear-gradient(155deg,#fff9df,#ffe783);border:1px solid rgba(192,145,13,.15);overflow:hidden}
+.envelope-base::before,.envelope-base::after{content:"";position:absolute;width:72%;height:135%;top:12%;background:rgba(255,246,203,.94)}
+.envelope-base::before{left:-30%;transform:rotate(40deg)}
+.envelope-base::after{right:-30%;transform:rotate(-40deg)}
+.envelope-flap{position:absolute;z-index:5;top:0;left:0;width:100%;height:58%;clip-path:polygon(0 0,100% 0,50% 100%);background:linear-gradient(#ffef9e,#ffd95b);transform-origin:50% 0;transition:transform .8s cubic-bezier(.2,.7,.15,1)}
+.envelope.open .envelope-flap{transform:rotateX(180deg);z-index:1}
+.seal{position:absolute;z-index:7;top:130px;left:50%;transform:translateX(-50%);width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff6cb;font-size:24px;background:linear-gradient(145deg,#d49a0b,#a96f00);box-shadow:0 8px 16px rgba(131,89,0,.2);transition:.4s ease}
+.envelope.open .seal{opacity:0;transform:translateX(-50%) scale(.6)}
+.paper{position:absolute;z-index:3;left:7%;bottom:18px;width:86%;height:255px;padding:30px;border-radius:14px;background:linear-gradient(rgba(255,255,255,.96),rgba(255,254,242,.98));box-shadow:0 5px 25px rgba(110,83,15,.08);transition:transform .75s .15s cubic-bezier(.2,.8,.2,1),height .7s .15s ease;overflow:hidden}
+.envelope.open .paper{transform:translateY(-80px);height:500px;overflow-y:auto;overflow-x:hidden}
+.letter-content{opacity:0;transform:translateY(10px);transition:.6s .6s ease}
+.envelope.open .letter-content{opacity:1;transform:none}
+.letter-hi{font-family:'Great Vibes',cursive;color:#bb8000;font-size:clamp(38px,6vw,58px);font-weight:400}
+.letter-content p{margin-top:13px;color:#695421;font-size:15px;line-height:1.9}
+.signature{margin-top:20px;color:#b57d00;font-family:'Great Vibes',cursive;font-size:38px}
+.letter-hint{margin-top:24px;text-align:center;color:#96782b;font-size:13px;font-weight:600}
+
+/* Sorpresa */
+.surprise-card{text-align:center}
+.surprise-icon{font-size:72px;animation:spinFlower 6s linear infinite}
+@keyframes spinFlower{to{transform:rotate(360deg)}}
+.surprise-title{font-family:'Great Vibes',cursive;font-size:clamp(44px,7vw,72px);font-weight:400;color:#bb8000;margin-top:10px}
+.surprise-text{max-width:650px;margin:12px auto 0;line-height:1.95;color:#7a642c;font-size:16px}
+.surprise-bouquet{margin:28px auto 18px;display:flex;justify-content:center;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.surprise-bouquet .bouquet-badge{background:linear-gradient(135deg,#fff7cf,#ffe578);color:#8a6600;padding:12px 22px;border-radius:999px;font-weight:700;box-shadow:0 10px 24px rgba(123,91,0,.14)}
+
+/* Modal ramo */
+.modal-backdrop{position:fixed;inset:0;background:rgba(78,55,0,.28);backdrop-filter:blur(6px);display:none;place-items:center;z-index:100;padding:20px}
+.modal-backdrop.show{display:grid;animation:fadeIn .35s ease}
+.ramo-box{width:min(520px,100%);background:#fffdf4;border-radius:30px;padding:30px 24px;text-align:center;box-shadow:0 28px 70px rgba(80,57,0,.25)}
+.ramo-title{font-family:'Great Vibes',cursive;font-size:54px;color:#ba7e00;font-weight:400}
+.ramo-text{margin-top:10px;color:#745e27;line-height:1.8}
+.ramo-visual{margin:12px auto 8px;display:flex;justify-content:center;align-items:flex-end;gap:0;transform:scale(.9)}
+.ramo-lazo{display:inline-block;margin-top:10px;padding:10px 20px;border-radius:999px;background:linear-gradient(135deg,#ffe786,#f5bf20);font-weight:700;color:#6c5100;box-shadow:0 10px 24px rgba(165,120,0,.17)}
+
+/* Music */
+.music-player{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:10px;padding:9px 12px 9px 9px;border-radius:999px;background:rgba(255,255,251,.85);backdrop-filter:blur(12px);border:1px solid rgba(209,164,26,.18);box-shadow:0 14px 35px rgba(91,62,0,.13);color:#6f5512}
+.music-button{width:43px;height:43px;border:0;border-radius:50%;cursor:pointer;color:#6b4e00;font-size:17px;background:linear-gradient(145deg,#ffe579,#f6bb18)}
+.music-meta strong{display:block;font-size:11px}.music-meta span{font-size:10px;color:#9a813f}
+.bars{display:flex;align-items:flex-end;height:19px;gap:2px}.bars i{display:block;width:3px;height:5px;border-radius:3px;background:#ddb11d}
+.music-player.playing .bars i{animation:musicBar .65s ease-in-out infinite alternate}.bars i:nth-child(2){animation-delay:-.2s}.bars i:nth-child(3){animation-delay:-.4s}.bars i:nth-child(4){animation-delay:-.1s}
+@keyframes musicBar{to{height:18px}}
+
+.floating{position:absolute;top:-50px;animation:fall linear forwards;will-change:transform;filter:drop-shadow(0 4px 6px rgba(0,0,0,.07))}
+@keyframes fall{0%{transform:translate3d(0,-60px,0) rotate(0deg);opacity:0}8%{opacity:.95}100%{transform:translate3d(var(--drift),110vh,0) rotate(var(--rotation));opacity:.75}}
+.burst-item{position:fixed;left:50%;top:55%;font-size:24px;opacity:0;animation:burst 1.7s cubic-bezier(.15,.8,.25,1) forwards}
+@keyframes burst{0%{opacity:1;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1.35)}}
+
+
+.flower-message{
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:95;
+  padding:18px 32px;
+  border-radius:999px;
+  background:rgba(255,255,246,.88);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,230,140,.8);
+  box-shadow:0 18px 45px rgba(97,70,0,.16);
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(38px,6vw,64px);
+  color:#bf8500;
+  opacity:0;
+  pointer-events:none;
+  animation:flowerMessageIn 3.6s ease forwards;
+}
+@keyframes flowerMessageIn{
+  0%{opacity:0;transform:translate(-50%,-40%) scale(.86)}
+  18%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  75%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-58%) scale(1.04)}
+}
+
+.flower-flood-overlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  overflow:hidden;
+  pointer-events:auto;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.22), transparent 20%),
+    radial-gradient(circle at 80% 15%, rgba(255,250,180,.20), transparent 18%),
+    linear-gradient(180deg, #fffbe9 0%, #fff0a7 40%, #ffd84f 100%);
+}
+.flower-flood-overlay.show{
+  display:block;
+}
+.flower-flood-item{
+  position:absolute;
+  top:-12vh;
+  will-change:transform;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.10));
+  animation:floodFall linear forwards;
+}
+@keyframes floodFall{
+  0%{
+    transform:translate3d(0,-12vh,0) rotate(0deg) scale(.85);
+    opacity:0;
+  }
+  8%{opacity:1;}
+  100%{
+    transform:translate3d(var(--drift-x),115vh,0) rotate(var(--spin)) scale(1.08);
+    opacity:.98;
+  }
+}
+.hidden{display:none !important}
+
+@media (max-width:700px){
+  .hero-card,.panel-card{border-radius:26px}
+  .envelope{transform:scale(.84);margin-left:-6%;width:112%}
+  .letter-wrap{padding-top:60px}
+  .letter-wrap.opened{padding-top:300px;padding-bottom:210px}
+  .envelope.open .paper{height:520px;transform:translateY(-65px)}
+  .music-meta{display:none}
+  .flower{margin:0 -9px}
+  .background-bouquet.left{left:-60px;bottom:-20px;transform:scale(.75)}
+  .background-bouquet.right{right:-70px;bottom:-20px;transform:scale(.70) scaleX(-1)}
+}
+</style>
+</head>
+<body>
+<div id="backDecor"></div>
+<div id="petalsLayer"></div>
+<div id="burstLayer"></div>
+
+<div class="scene">
+  <section class="hero" id="heroSection">
+    <article class="hero-card">
+      <div class="tag"><i></i> UN DETALLE BONITO PARA TI</div>
+      <h1 class="hero-title">Flores Amarillas</h1>
+      <div class="hero-name">Para <span id="nombrePortada">mi persona especial</span> 💛</div>
+      <p class="hero-copy">Un pequeño rincón lleno de luz, flores y cariño, para recordarte lo bonita/o, importante y especial que eres. Porque a veces una flor amarilla puede decir muchísimo más que mil palabras.</p>
+
+      <div class="bouquet" aria-label="ramo de flores amarillas">
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btnCarta">💌 Abrir mi carta</button>
+        <button class="btn btn-soft" id="btnFlores">🌼 Lanzar flores</button>
+        <button class="btn btn-soft" id="btnSorpresa">✨ Una sorpresa</button>
+      </div>
+    </article>
+  </section>
+
+  <section class="panel-view" id="cartaSection">
+    <article class="panel-card">
+      <button class="btn btn-soft back-btn" data-back="heroSection">← Volver</button>
+      <div class="letter-wrap">
+        <div class="envelope" id="sobre" role="button" tabindex="0" aria-label="Abrir carta">
+          <div class="paper">
+            <div class="letter-content">
+              <h2 class="letter-hi">Para <span id="nombreCarta">ti</span>:</h2>
+              <p>Si pudiera convertir cada pensamiento bonito en una flor, probablemente hoy tendría un jardín entero para regalarte.</p>
+              <p>Estas flores amarillas son una pequeña forma de decirte que deseo que tus días estén llenos de luz, paz, sonrisas sinceras y mucho amor bonito.</p>
+              <p>Ojalá nunca olvides que incluso en los días grises siempre puede aparecer un rayito de sol. Y si alguna vez hace falta, espero que este pequeño detalle pueda ser uno de ellos. 💛</p>
+              <div class="signature" id="firmaCarta">Con mucho cariño 💛</div>
+            </div>
+          </div>
+          <div class="envelope-base"></div>
+          <div class="envelope-flap"></div>
+          <div class="seal">♥</div>
+        </div>
+        <div class="letter-hint">Toca el sobre para abrir la carta ✨</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="panel-view" id="sorpresaSection">
+    <article class="panel-card surprise-card">
+      <button class="btn btn-soft back-btn" data-back="heroSection">← Volver</button>
+      <div class="surprise-icon">🌻</div>
+      <h2 class="surprise-title">Sorpresa para ti</h2>
+      <p class="surprise-text" id="mensajeSorpresa">No elegí flores amarillas por casualidad: representan alegría, luz y cariño; justo lo que deseo que nunca falte en tus días.</p>
+      <div class="surprise-bouquet">
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+      </div>
+      <div class="bouquet-badge">Para ti, mi amor 💛</div>
+      <div class="actions" style="margin-top:26px">
+        <button class="btn btn-primary" id="btnRamoExtra">🌼 Enviar más flores</button>
+      </div>
+    </article>
+  </section>
+</div>
+
+<div class="modal-backdrop" id="ramoModal">
+  <div class="ramo-box">
+    <div class="ramo-title">Para ti bb 💛</div>
+    <div class="ramo-visual">
+      <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+      <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+      <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+      <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+    </div>
+    <p class="ramo-text">Este pequeño ramo es para recordarte que mereces detalles bonitos, mucho amor y un montón de sonrisas. 🌻</p>
+    <div class="ramo-lazo">Con todo mi cariño ✨</div>
+    <div class="actions" style="margin-top:22px">
+      <button class="btn btn-primary" id="cerrarRamo">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="flower-flood-overlay" id="flowerFloodOverlay" aria-hidden="true"></div>
+
+<div class="music-player" id="musicPlayer">
+  <button class="music-button" id="musicButton" aria-label="Reproducir música">▶</button>
+  <div class="bars"><i></i><i></i><i></i><i></i></div>
+  <div class="music-meta"><strong>Melodía romántica</strong><span>YouTube</span></div>
+</div>
+
+<!-- Reproductor real de YouTube. Se mantiene fuera de la vista;
+     el control visible es el botón flotante de música. -->
+<div id="youtubePlayerHost" aria-hidden="true"
+     style="position:fixed;left:-10000px;top:0;width:240px;height:240px;opacity:.01;pointer-events:none;overflow:hidden;"></div>
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+const CONFIG = {
+  nombre: 'Mi persona especial',
+  firma: 'Con mucho cariño 💛',
+  sorpresa: 'No elegí flores amarillas por casualidad. Representan alegría, luz y cariño; justo lo que deseo que nunca falte en tus días. Gracias por ser alguien tan especial para mí.'
+};
+
+document.getElementById('nombrePortada').textContent = CONFIG.nombre;
+document.getElementById('nombreCarta').textContent = CONFIG.nombre;
+document.getElementById('firmaCarta').textContent = CONFIG.firma;
+document.getElementById('mensajeSorpresa').textContent = CONFIG.sorpresa;
+
+function bouquetHTML(extraClass=''){
+  return `
+    <div class="background-bouquet ${extraClass}">
+      <div class="bouquet">
+        ${Array.from({length:5}).map(()=>`
+          <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+document.getElementById('backDecor').innerHTML = bouquetHTML('left') + bouquetHTML('right') + bouquetHTML('top');
+
+const petalsLayer = document.getElementById('petalsLayer');
+const burstLayer = document.getElementById('burstLayer');
+const floatingThings = ['🌼','🌻','💛','✨'];
+
+function createFloating(){
+  const el = document.createElement('div');
+  el.className = 'floating';
+  el.textContent = floatingThings[Math.floor(Math.random()*floatingThings.length)];
+  el.style.left = Math.random()*100 + 'vw';
+  el.style.fontSize = (14 + Math.random()*18) + 'px';
+  el.style.animationDuration = (7 + Math.random()*8) + 's';
+  el.style.setProperty('--drift', (-100 + Math.random()*200) + 'px');
+  el.style.setProperty('--rotation', (-280 + Math.random()*560) + 'deg');
+  petalsLayer.appendChild(el);
+  setTimeout(()=>el.remove(),16000);
+}
+setInterval(createFloating, 650);
+for(let i=0;i<16;i++) setTimeout(createFloating, i*150);
+
+function explosionFlores(cantidad=35){
+  for(let i=0;i<cantidad;i++){
+    const item = document.createElement('div');
+    item.className = 'burst-item';
+    item.textContent = floatingThings[Math.floor(Math.random()*floatingThings.length)];
+    const angle = Math.random()*Math.PI*2;
+    const dist = 90 + Math.random()*300;
+    item.style.setProperty('--x', Math.cos(angle)*dist + 'px');
+    item.style.setProperty('--y', Math.sin(angle)*dist + 'px');
+    item.style.setProperty('--r', (-250 + Math.random()*500) + 'deg');
+    item.style.animationDelay = Math.random()*0.16 + 's';
+    burstLayer.appendChild(item);
+    setTimeout(()=>item.remove(), 2200);
+  }
+}
+
+const heroSection = document.getElementById('heroSection');
+const cartaSection = document.getElementById('cartaSection');
+const sorpresaSection = document.getElementById('sorpresaSection');
+
+function hideAllSections(){
+  heroSection.classList.add('hidden');
+  cartaSection.classList.remove('show');
+  sorpresaSection.classList.remove('show');
+}
+
+function showHero(){
+  heroSection.classList.remove('hidden');
+  cartaSection.classList.remove('show');
+  sorpresaSection.classList.remove('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function openCarta(){
+  hideAllSections();
+  cartaSection.classList.add('show');
+  cartaSection.scrollIntoView({behavior:'smooth'});
+  iniciarMusica();
+  explosionFlores(18);
+}
+
+function openSorpresa(){
+  hideAllSections();
+  sorpresaSection.classList.add('show');
+  sorpresaSection.scrollIntoView({behavior:'smooth'});
+  iniciarMusica();
+  explosionFlores(28);
+}
+
+document.getElementById('btnCarta').addEventListener('click', openCarta);
+document.getElementById('btnSorpresa').addEventListener('click', openSorpresa);
+
+document.querySelectorAll('.back-btn').forEach(btn=>{
+  btn.addEventListener('click', showHero);
+});
+
+const sobre = document.getElementById('sobre');
+const letterWrap = document.querySelector('.letter-wrap');
+const letterPaper = sobre.querySelector('.paper');
+
+function toggleEnvelope(){
+  sobre.classList.toggle('open');
+
+  const isOpen = sobre.classList.contains('open');
+  letterWrap.classList.toggle('opened', isOpen);
+
+  iniciarMusica();
+
+  if(isOpen){
+    explosionFlores(24);
+
+    // Esperamos a que la carta se despliegue y luego la centramos
+    // para que el encabezado y todo el texto queden visibles.
+    setTimeout(() => {
+      letterPaper.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }, 520);
+  } else {
+    setTimeout(() => {
+      sobre.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }, 180);
+  }
+}
+sobre.addEventListener('click', toggleEnvelope);
+sobre.addEventListener('keydown', (e)=>{
+  if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleEnvelope(); }
+});
+
+const ramoModal = document.getElementById('ramoModal');
+function abrirRamo(){
+  ramoModal.classList.add('show');
+  explosionFlores(40);
+  iniciarMusica();
+}
+function cerrarRamo(){
+  ramoModal.classList.remove('show');
+}
+
+function mostrarMensajeFlores(texto = 'Para ti bb 💛'){
+  const msg = document.createElement('div');
+  msg.className = 'flower-message';
+  msg.textContent = texto;
+  document.body.appendChild(msg);
+  setTimeout(()=>msg.remove(), 3800);
+}
+
+const flowerFloodOverlay = document.getElementById('flowerFloodOverlay');
+let flowerFloodTapCount = 0;
+let flowerFloodIntervals = [];
+
+function createFloodFlower(){
+  if(!flowerFloodOverlay.classList.contains('show')) return;
+
+  const item = document.createElement('div');
+  item.className = 'flower-flood-item';
+
+  const floodThings = ['🌼','🌻','💐','🌼','🌻'];
+  item.textContent = floodThings[Math.floor(Math.random() * floodThings.length)];
+
+  item.style.left = Math.random() * 100 + 'vw';
+  item.style.fontSize = (26 + Math.random() * 42) + 'px';
+  item.style.animationDuration = (4.2 + Math.random() * 3.8) + 's';
+  item.style.setProperty('--drift-x', (-80 + Math.random() * 160) + 'px');
+  item.style.setProperty('--spin', (-260 + Math.random() * 520) + 'deg');
+
+  flowerFloodOverlay.appendChild(item);
+  setTimeout(()=>item.remove(), 9000);
+}
+
+function clearFlowerFloodTimers(){
+  flowerFloodIntervals.forEach(id => clearInterval(id));
+  flowerFloodIntervals = [];
+}
+
+function closeFlowerFlood(){
+  clearFlowerFloodTimers();
+  flowerFloodTapCount = 0;
+  flowerFloodOverlay.classList.remove('show');
+  flowerFloodOverlay.innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+function openFlowerFlood(){
+  iniciarMusica();
+  flowerFloodTapCount = 0;
+  flowerFloodOverlay.innerHTML = '';
+  flowerFloodOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  /* Llenado inicial fuerte */
+  for(let i=0;i<220;i++){
+    setTimeout(createFloodFlower, i * 14);
+  }
+
+  /* Lluvia continua mientras la capa esté activa */
+  flowerFloodIntervals.push(setInterval(createFloodFlower, 65));
+  flowerFloodIntervals.push(setInterval(() => {
+    for(let i=0;i<8;i++){
+      setTimeout(createFloodFlower, i * 20);
+    }
+  }, 420));
+}
+
+function llenarPantallaDeFlores(){
+  openFlowerFlood();
+}
+
+flowerFloodOverlay.addEventListener('pointerdown', function(){
+  flowerFloodTapCount += 1;
+  if(flowerFloodTapCount >= 3){
+    closeFlowerFlood();
+  }
+});
+
+document.getElementById('btnFlores').addEventListener('click', llenarPantallaDeFlores);
+document.getElementById('btnRamoExtra').addEventListener('click', abrirRamo);
+document.getElementById('cerrarRamo').addEventListener('click', cerrarRamo);
+ramoModal.addEventListener('click', (e)=>{ if(e.target===ramoModal) cerrarRamo(); });
+
+/* =========================================================
+   MÚSICA DE YOUTUBE
+   IMPORTANTE: abrir esta página desde IIS (http/https),
+   no haciendo doble clic al HTML con file://.
+========================================================= */
+
+const YOUTUBE_VIDEO_ID = 'S7gMzYqXIZc';
+
+let youtubePlayer = null;
+let youtubeReady = false;
+let musicPlaying = false;
+let youtubeErrorCode = null;
+
+const musicButton = document.getElementById('musicButton');
+const musicPlayer = document.getElementById('musicPlayer');
+const musicMeta = musicPlayer.querySelector('.music-meta span');
+
+function setMusicStatus(text){
+  if(musicMeta) musicMeta.textContent = text;
+}
+
+function isHttpPage(){
+  return location.protocol === 'http:' || location.protocol === 'https:';
+}
+
+function showYoutubeEnvironmentWarning(){
+  if(isHttpPage()) return false;
+
+  setMusicStatus('Abrir desde IIS');
+  musicButton.textContent = '!';
+  musicButton.title = 'YouTube necesita que esta página se abra desde IIS usando http:// o https://';
+  musicButton.setAttribute('aria-label', 'Abrir la página desde IIS para reproducir YouTube');
+  return true;
+}
+
+/*
+ * YouTube llama esta función cuando termina de cargar su API.
+ * El reproductor se mantiene fuera de la pantalla, pero conserva
+ * un tamaño de 240x240 px porque YouTube exige al menos 200x200.
+ */
+window.onYouTubeIframeAPIReady = function(){
+
+  if(showYoutubeEnvironmentWarning()){
+    return;
+  }
+
+  const playerVars = {
+    autoplay: 0,
+    controls: 0,
+    disablekb: 1,
+    fs: 0,
+    rel: 0,
+    playsinline: 1,
+    loop: 1,
+    playlist: YOUTUBE_VIDEO_ID,
+    origin: location.origin
+  };
+
+  youtubePlayer = new YT.Player('youtubePlayerHost', {
+    width: '240',
+    height: '240',
+    videoId: YOUTUBE_VIDEO_ID,
+    playerVars: playerVars,
+    events: {
+      onReady: function(event){
+        youtubeReady = true;
+        youtubeErrorCode = null;
+
+        try{
+          const iframe = event.target.getIframe();
+          iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+          iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+        }catch(e){}
+
+        event.target.setVolume(45);
+        setMusicStatus('Lista para reproducir');
+        musicButton.textContent = '▶';
+      },
+
+      onStateChange: function(event){
+        if(event.data === YT.PlayerState.PLAYING){
+          setMusicUi(true);
+          setMusicStatus('Flores amarillas ♪');
+        }
+
+        if(event.data === YT.PlayerState.PAUSED){
+          setMusicUi(false);
+          setMusicStatus('En pausa');
+        }
+
+        if(event.data === YT.PlayerState.ENDED){
+          /* Respaldo adicional al loop de YouTube */
+          try{
+            event.target.seekTo(0, true);
+            event.target.playVideo();
+          }catch(e){}
+        }
+      },
+
+      onError: function(event){
+        youtubeErrorCode = event.data;
+        youtubeReady = false;
+        setMusicUi(false);
+
+        if(event.data === 153){
+          setMusicStatus('Error 153: abrir desde IIS');
+        }else if(event.data === 101 || event.data === 150){
+          setMusicStatus('El video no permite inserción');
+        }else{
+          setMusicStatus('Error YouTube ' + event.data);
+        }
+      }
+    }
+  });
+};
+
+function setMusicUi(playing){
+  musicPlaying = !!playing;
+  musicButton.textContent = musicPlaying ? '❚❚' : '▶';
+  musicButton.setAttribute(
+    'aria-label',
+    musicPlaying ? 'Pausar música' : 'Reproducir música'
+  );
+  musicPlayer.classList.toggle('playing', musicPlaying);
+}
+
+function iniciarMusica(){
+  if(showYoutubeEnvironmentWarning()){
+    return;
+  }
+
+  if(youtubeErrorCode){
+    return;
+  }
+
+  if(!youtubeReady || !youtubePlayer){
+    setMusicStatus('Cargando YouTube...');
+    return;
+  }
+
+  try{
+    youtubePlayer.playVideo();
+  }catch(e){
+    setMusicStatus('Presiona ▶ otra vez');
+    setMusicUi(false);
+  }
+}
+
+function pausarMusica(){
+  if(youtubeReady && youtubePlayer){
+    try{
+      youtubePlayer.pauseVideo();
+    }catch(e){}
+  }
+  setMusicUi(false);
+}
+
+musicButton.addEventListener('click', function(){
+  if(showYoutubeEnvironmentWarning()){
+    alert(
+      'YouTube no puede reproducirse correctamente si abres este HTML con doble clic (file://).\n\n' +
+      'Coloca el archivo dentro de tu sitio de IIS y ábrelo desde una dirección como:\n' +
+      'http://localhost/flores_amarillas_version_5_youtube_corregido.html'
+    );
+    return;
+  }
+
+  if(musicPlaying){
+    pausarMusica();
+  }else{
+    iniciarMusica();
+  }
+});
+
+/* Mostrar desde el inicio si el archivo fue abierto incorrectamente. */
+window.addEventListener('DOMContentLoaded', function(){
+  showYoutubeEnvironmentWarning();
+});
+
+window.addEventListener('load', ()=>{ setTimeout(()=>explosionFlores(12), 600); });
+</script>
+</body>
+</html>
