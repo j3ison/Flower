@@ -1271,6 +1271,41 @@
     }
   }
 
+
+  /* Corrección de formación del árbol en móvil */
+  @media (max-width:700px){
+    .tree-wrap{
+      overflow:visible;
+    }
+
+    .tree-wrap #treeSvg,
+    .tree-wrap #blossoms{
+      position:absolute;
+      left:0;
+      top:0;
+      width:1200px;
+      height:700px;
+      overflow:visible;
+    }
+
+    .tree-wrap #blossoms{
+      right:auto;
+      bottom:auto;
+    }
+
+    /*
+      Las flores se escalan junto con el árbol, por lo que ya no
+      necesitan coordenadas independientes basadas en la pantalla.
+    */
+    .tree-wrap .blossom{
+      transform-origin:center center;
+    }
+
+    .final-copy{
+      z-index:18;
+    }
+  }
+
   @media (prefers-reduced-motion:reduce){
     *{scroll-behavior:auto}
   }
@@ -1586,17 +1621,61 @@
   const isPhone = () => window.matchMedia('(max-width:700px)').matches;
 
   function applyResponsiveLayout(){
+    const treeWrap = document.querySelector('.tree-wrap');
+
     if(isPhone()){
       /*
-        En escritorio el SVG se muestra a lo ancho.
-        En vertical usamos una ventana más cerrada y "meet" para que
-        ninguna rama importante desaparezca fuera de la pantalla.
+        IMPORTANTE:
+        Las ramas y las flores ahora viven en el mismo lienzo lógico
+        de 1200 x 700. Escalamos todo el conjunto a la vez.
+        Esto evita que las flores se separen de las ramas.
       */
-      treeSvg.setAttribute('viewBox','520 72 590 690');
-      treeSvg.setAttribute('preserveAspectRatio','xMidYMax meet');
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+
+      treeSvg.setAttribute('viewBox','0 0 1200 700');
+      treeSvg.setAttribute('preserveAspectRatio','xMidYMid meet');
+
+      treeWrap.style.inset = 'auto';
+      treeWrap.style.left = '0';
+      treeWrap.style.top = '0';
+      treeWrap.style.width = '1200px';
+      treeWrap.style.height = '700px';
+      treeWrap.style.transformOrigin = '0 0';
+
+      /*
+        El árbol útil está aproximadamente entre x=560..1160.
+        Lo escalamos para que ocupe casi todo el ancho del teléfono,
+        dejando espacio inferior para el texto.
+      */
+      let scale = W / 555;
+      scale = Math.max(.57, Math.min(.82, scale));
+
+      const designCenterX = 850;
+      const desiredCenterX = W * .52;
+
+      let tx = desiredCenterX - designCenterX * scale;
+
+      // La copa comienza cerca de y=100 en el diseño.
+      let ty = 45 - 90 * scale;
+
+      // En teléfonos muy bajos subimos ligeramente el árbol.
+      if(H < 700) ty -= 18;
+
+      treeWrap.style.transform =
+        `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`;
+
     }else{
       treeSvg.setAttribute('viewBox','0 0 1200 700');
       treeSvg.setAttribute('preserveAspectRatio','xMidYMid slice');
+
+      treeWrap.style.inset = '';
+      treeWrap.style.left = '';
+      treeWrap.style.top = '';
+      treeWrap.style.width = '';
+      treeWrap.style.height = '';
+      treeWrap.style.transform = '';
+      treeWrap.style.transformOrigin = '';
     }
   }
 
@@ -1876,63 +1955,121 @@
 
   function createBlossoms(){
     blossoms.innerHTML='';
+
     const colors = [
       '#ff3f78','#f92f68','#ff6f91','#ff8dad',
       '#f94f83','#ffa064','#ffbf78','#f76d97',
       '#ffc0cf','#fff0ea','#ff779f','#ec3a73'
     ];
 
-    const W = innerWidth;
-    const H = innerHeight;
-
-    // El corazón del follaje queda arriba a la derecha, como en el video.
     const phone = isPhone();
-    const cx = phone ? W * .59 : W * .74;
-    const cy = phone ? H * .31 : H * .36;
-    const rx = phone ? W * .43 : Math.min(W*.27, H*.39);
-    const ry = phone ? W * .36 : Math.min(H*.30, W*.22);
-
     const points = [];
-    let tries=0;
+    let tries = 0;
 
-    while(points.length < (phone ? 145 : 280) && tries<9000){
-      tries++;
-      const nx = -1.18 + Math.random()*2.36;
-      const ny = -1.08 + Math.random()*2.12;
+    /*
+      MÓVIL:
+      Estas coordenadas pertenecen al MISMO plano 1200x700
+      utilizado por las ramas del árbol.
+    */
+    if(phone){
+      const cx = 865;
+      const cy = 255;
+      const rx = 275;
+      const ry = 205;
 
-      // Invertimos Y para que la punta del corazón quede abajo.
-      if(heartInside(nx,-ny)){
-        // hueco ligero en el centro para que se perciban ramas.
-        if(Math.random()<.10 && Math.abs(nx)<.28 && Math.abs(ny)<.25) continue;
+      while(points.length < 190 && tries < 12000){
+        tries++;
+
+        const nx = -1.18 + Math.random()*2.36;
+        const ny = -1.08 + Math.random()*2.12;
+
+        if(heartInside(nx,-ny)){
+          // Pequeños huecos permiten que algunas ramas sigan viéndose.
+          if(Math.random()<.09 && Math.abs(nx)<.27 && Math.abs(ny)<.28){
+            continue;
+          }
+
+          points.push({
+            x:cx + nx*rx,
+            y:cy + ny*ry,
+            d:Math.random()*1.55,
+            s:9 + Math.random()*21,
+            rot:-30 + Math.random()*60,
+            c:colors[Math.floor(Math.random()*colors.length)],
+            type:Math.random()>.52?'heart':'dot'
+          });
+        }
+      }
+
+      /*
+        Flores extra alrededor de la unión de las ramas.
+        Esto hace que la copa se una visualmente al tronco.
+      */
+      for(let i=0;i<38;i++){
         points.push({
-          x:cx + nx*rx,
-          y:cy + ny*ry,
-          d:Math.random()*1.8,
-          s:(W<700 ? 7 : 9) + Math.random()*(W<700 ? 15 : 22),
-          rot:-30 + Math.random()*60,
+          x:850 + (Math.random()-.5)*150,
+          y:405 + (Math.random()-.5)*105,
+          d:.15+Math.random()*.85,
+          s:10+Math.random()*18,
+          rot:-40+Math.random()*80,
           c:colors[Math.floor(Math.random()*colors.length)],
-          type:Math.random()>.52?'heart':'dot'
+          type:Math.random()>.48?'heart':'dot'
+        });
+      }
+
+    }else{
+      /*
+        ESCRITORIO:
+        Conservamos el comportamiento que ya se veía bien.
+      */
+      const W = innerWidth;
+      const H = innerHeight;
+
+      const cx = W * .74;
+      const cy = H * .36;
+      const rx = Math.min(W*.27, H*.39);
+      const ry = Math.min(H*.30, W*.22);
+
+      while(points.length < 280 && tries < 9000){
+        tries++;
+        const nx = -1.18 + Math.random()*2.36;
+        const ny = -1.08 + Math.random()*2.12;
+
+        if(heartInside(nx,-ny)){
+          if(Math.random()<.10 && Math.abs(nx)<.28 && Math.abs(ny)<.25){
+            continue;
+          }
+
+          points.push({
+            x:cx + nx*rx,
+            y:cy + ny*ry,
+            d:Math.random()*1.8,
+            s:9 + Math.random()*22,
+            rot:-30 + Math.random()*60,
+            c:colors[Math.floor(Math.random()*colors.length)],
+            type:Math.random()>.52?'heart':'dot'
+          });
+        }
+      }
+
+      for(let i=0;i<32;i++){
+        points.push({
+          x:W*.71 + (Math.random()-.5)*W*.12,
+          y:H*.57 + (Math.random()-.5)*H*.12,
+          d:.2+Math.random()*.9,
+          s:9+Math.random()*18,
+          rot:-40+Math.random()*80,
+          c:colors[Math.floor(Math.random()*colors.length)],
+          type:Math.random()>.5?'heart':'dot'
         });
       }
     }
 
-    // Más flores en el cuello donde las ramas se unen.
-    for(let i=0;i<32;i++){
-      points.push({
-        x:(phone ? W*.59 : W*.71) + (Math.random()-.5)*W*(phone ? .18 : .12),
-        y:(phone ? H*.52 : H*.57) + (Math.random()-.5)*H*(phone ? .10 : .12),
-        d:.2+Math.random()*.9,
-        s:9+Math.random()*18,
-        rot:-40+Math.random()*80,
-        c:colors[Math.floor(Math.random()*colors.length)],
-        type:Math.random()>.5?'heart':'dot'
-      });
-    }
-
     points
       .sort((a,b)=>a.y-b.y + (Math.random()-.5)*20)
-      .forEach((p,i)=>{
+      .forEach((p)=>{
         const el=document.createElement('i');
+
         el.className=`blossom ${p.type}`;
         el.style.left=`${p.x}px`;
         el.style.top=`${p.y}px`;
@@ -1940,10 +2077,10 @@
         el.style.setProperty('--rot',`${p.rot}deg`);
         el.style.setProperty('--bc',p.c);
         el.style.setProperty('--bd',`${p.d}s`);
+
         blossoms.appendChild(el);
       });
   }
-
 
   function createFallingPhotos(){
     memoryPhotoNodes.forEach(n=>n.remove());
@@ -2036,6 +2173,9 @@
     scene2.classList.remove('active');
     scene3.classList.add('active');
     scene3.classList.add('grow');
+
+    // Recalcular el escenario antes de crear la copa del árbol.
+    applyResponsiveLayout();
     createBlossoms();
     createFallingPhotos();
     createPetals();
@@ -2101,12 +2241,41 @@
 
   replay.addEventListener('click',reset);
 
+  // Aplicar el encuadre correcto desde el primer render.
+  applyResponsiveLayout();
   makeImpactSparks();
   initialAim();
 
+  let viewportTimer = null;
   window.addEventListener('resize',()=>{
-    if(!fired && !aiming) initialAim();
-  });
+    clearTimeout(viewportTimer);
+    viewportTimer=setTimeout(()=>{
+      applyResponsiveLayout();
+
+      if(!fired && !aiming){
+        initialAim();
+      }
+
+      if(scene3.classList.contains('active')){
+        createBlossoms();
+        requestAnimationFrame(()=>{
+          document.querySelectorAll('.blossom').forEach(el=>el.classList.add('pop'));
+        });
+      }
+    },120);
+  },{passive:true});
+
+  window.addEventListener('orientationchange',()=>{
+    setTimeout(()=>{
+      applyResponsiveLayout();
+      if(scene3.classList.contains('active')){
+        createBlossoms();
+        requestAnimationFrame(()=>{
+          document.querySelectorAll('.blossom').forEach(el=>el.classList.add('pop'));
+        });
+      }
+    },220);
+  },{passive:true});
 })();
 </script>
 </body>
