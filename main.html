@@ -201,14 +201,14 @@ body::before{
 .surprise-bouquet{margin:28px auto 18px;display:flex;justify-content:center;align-items:flex-end;gap:12px;flex-wrap:wrap}
 .surprise-bouquet .bouquet-badge{background:linear-gradient(135deg,#fff7cf,#ffe578);color:#8a6600;padding:12px 22px;border-radius:999px;font-weight:700;box-shadow:0 10px 24px rgba(123,91,0,.14)}
 
-/* Modal ramo */
+/* Modal r */
 .modal-backdrop{position:fixed;inset:0;background:rgba(78,55,0,.28);backdrop-filter:blur(6px);display:none;place-items:center;z-index:100;padding:20px}
 .modal-backdrop.show{display:grid;animation:fadeIn .35s ease}
-.ramo-box{width:min(520px,100%);background:#fffdf4;border-radius:30px;padding:30px 24px;text-align:center;box-shadow:0 28px 70px rgba(80,57,0,.25)}
-.ramo-title{font-family:'Great Vibes',cursive;font-size:54px;color:#ba7e00;font-weight:400}
-.ramo-text{margin-top:10px;color:#745e27;line-height:1.8}
-.ramo-visual{margin:12px auto 8px;display:flex;justify-content:center;align-items:flex-end;gap:0;transform:scale(.9)}
-.ramo-lazo{display:inline-block;margin-top:10px;padding:10px 20px;border-radius:999px;background:linear-gradient(135deg,#ffe786,#f5bf20);font-weight:700;color:#6c5100;box-shadow:0 10px 24px rgba(165,120,0,.17)}
+.r-box{width:min(520px,100%);background:#fffdf4;border-radius:30px;padding:30px 24px;text-align:center;box-shadow:0 28px 70px rgba(80,57,0,.25)}
+.r-title{font-family:'Great Vibes',cursive;font-size:54px;color:#ba7e00;font-weight:400}
+.r-text{margin-top:10px;color:#745e27;line-height:1.8}
+.r-visual{margin:12px auto 8px;display:flex;justify-content:center;align-items:flex-end;gap:0;transform:scale(.9)}
+.r-lazo{display:inline-block;margin-top:10px;padding:10px 20px;border-radius:999px;background:linear-gradient(135deg,#ffe786,#f5bf20);font-weight:700;color:#6c5100;box-shadow:0 10px 24px rgba(165,120,0,.17)}
 
 /* Music */
 .music-player{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:10px;padding:9px 12px 9px 9px;border-radius:999px;background:rgba(255,255,251,.85);backdrop-filter:blur(12px);border:1px solid rgba(209,164,26,.18);box-shadow:0 14px 35px rgba(91,62,0,.13);color:#6f5512}
@@ -311,7 +311,7 @@ body::before{
       <div class="hero-name">Para <span id="nombrePortada">mi persona especial</span> 💛</div>
       <p class="hero-copy">Un pequeño rincón lleno de luz, flores y cariño, para recordarte lo bonita/o, importante y especial que eres. Porque a veces una flor amarilla puede decir muchísimo más que mil palabras.</p>
 
-      <div class="bouquet" aria-label="ramo de flores amarillas">
+      <div class="bouquet" aria-label="r de flores amarillas">
         <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
         <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
         <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
@@ -336,7 +336,7 @@ body::before{
             <div class="letter-content">
               <h2 class="letter-hi">Para <span id="nombreCarta">ti</span>:</h2>
               <p>Si pudiera convertir cada pensamiento bonito en una flor, probablemente hoy tendría un jardín entero para regalarte.</p>
-              <p>Estas flores amarillas son una pequeña forma de decirte que deseo que tus días estén llenos de luz, paz, sonrisas sinceras y mucho amor bonito.</p>
+              <p>Estas flores amarillas son una pequeña forma de decirte que deseo que tus días estén llenos de luz, paz, sonrisas sinceras y mucho r bonito.</p>
               <p>Ojalá nunca olvides que incluso en los días grises siempre puede aparecer un rayito de sol. Y si alguna vez hace falta, espero que este pequeño detalle pueda ser uno de ellos. 💛</p>
               <div class="signature" id="firmaCarta">Con mucho cariño 💛</div>
             </div>
@@ -361,7 +361,7 @@ body::before{
         <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
         <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
       </div>
-      <div class="bouquet-badge">Para ti, mi amor 💛</div>
+      <div class="bouquet-badge">Para ti💛</div>
       <div class="actions" style="margin-top:26px">
         <button class="btn btn-primary" id="btnRamoExtra">🌼 Enviar más flores</button>
       </div>
@@ -371,7 +371,7 @@ body::before{
 
 <div class="modal-backdrop" id="ramoModal">
   <div class="ramo-box">
-    <div class="ramo-title">Para ti bb 💛</div>
+    <div class="ramo-title">Para ti 💛</div>
     <div class="ramo-visual">
       <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
       <div class="flower"><div class="stem"></div><div class="leaf left"></div><div class="leaf right"></div><div class="head"><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i><span class="center"></span></div></div>
